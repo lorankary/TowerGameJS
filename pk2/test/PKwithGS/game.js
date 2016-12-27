@@ -44,15 +44,18 @@ class Game {
 //????????????????????????????????????????????????????????????????
   createTileDivs(){
     var tiles = [];
-    var md = select('#menuDiv');
-    for(var i =0; i < 5; i++){
-      var d = createDiv(md,"");
-      d.parent('menuDiv');
-      d.addClass('menuTileDiv'); // id instead of class
-      d.id = i;
-      tiles.push(d);
-    }
+    for(var i = 0; i < 5; i++){
+      var mtd = createDiv("");
+      mtd.parent("#menuDiv");
+      var divName = 'towImgDiv' + i;
+      mtd.id(divName);
 
+      //tImg.parent(mtd);
+      tiles.push(mtd);
+      var imgName = 'tow' + i + '.png';
+      var tImg = createImg(imgName);
+      tImg.parent(tiles[i]);
+  }
     return tiles;
   }
   getBankValue(){
@@ -142,3 +145,13 @@ function handleCNVMouseClicked() {
    }
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Other
+//
+// .menuTileDiv{
+//   background-color: #DDD;
+//   background-image: url("wframe.png");
+//   width:80px;
+//   height:80px;
+//   margin-top:38px;
+//   margin-left:10px;
+//     float:left;
+// }

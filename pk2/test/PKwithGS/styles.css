@@ -19,7 +19,7 @@ body{
 }
 
 #menuDiv{
-  background-color: #381100;
+  background-color: #990022;
   width:100px;
   height:750px;
   float:left;
@@ -52,4 +52,59 @@ body{
   height:80px;
   margin-top:38px;
   margin-left:10px;
+  float:left;
+}
+#towImgDiv0{
+  background-color: #DDD;
+  border:solid black 2px;
+  width:60px;
+  height:80px;
+  margin-top: 35px;
+  margin-left: 10px;
+  padding-top: 10px;
+  padding-left: 20PX;
+}
+
+#towImgDiv1{
+  background-color: #DDD;
+  border:solid black 2px;
+  width:60px;
+  height:80px;
+  margin-top: 55px;
+  margin-left: 10px;
+  padding-top: 10px;
+  padding-left: 20PX;
+}
+
+#towImgDiv2{
+  background-color: #DDD;
+  border:solid black 2px;
+  width:60px;
+  height:80px;
+  margin-top: 55px;
+  margin-left: 10px;
+  padding-top: 10px;
+  padding-left: 20PX;;
+}
+
+#towImgDiv3{
+  background-color: #DDD;
+  border:solid black 2px;
+  width:60px;
+  height:80px;
+  margin-top: 55px;
+  margin-left: 10px;
+  padding-top: 10px;
+  padding-left: 20PX;;
+}
+
+#towImgDiv4{
+  background-color: #DDD;
+  border:solid black 2px;
+  width:60px;
+  height:80px;
+  margin-top: 55px;
+  margin-left: 10px;
+  padding-top: 10px;
+  padding-left: 20PX;
 }
