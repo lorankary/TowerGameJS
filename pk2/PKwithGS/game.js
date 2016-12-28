@@ -31,13 +31,15 @@ class Game {
     if (this.isRunning) {
       this.render();
     }
-    for (var i = 0; i < this.towers.length; i++) {
+    for (let i = 0; i < this.towers.length; i++) {
       this.towers[i].run();
     }
-    for (var i = 0; i < this.enemies.length; i++) {
+    for (let i = 0; i < this.enemies.length; i++) {
       this.enemies[i].run();
     }
-     //println("mouseY -->  " + mouseY);
+    for (let i = 0; i < this.bullets.length; i++) {
+      this.bullets[i].run();
+    }
   }
 
   render() { // draw game stuff

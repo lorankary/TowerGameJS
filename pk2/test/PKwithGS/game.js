@@ -15,13 +15,11 @@ class Game {
     this.cnv = createCanvas(900, 750);
     this.cnv.parent('canDiv');
     this.tileDivs = this.createTileDivs();
-    //console.log('this.tileDivs = ' + this.tileDivs[1] );
     //select everything of type/class and set call backs
     loadDOMCallBacks(this.tileDivs);  //**********************************
     // select canvas for callbacks
     this.cnv.mouseMoved(handleCNVMouseMoved);
     this.cnv.mouseOver(handleCNVMouseOver);
-    //this.cnv.mouseOut(handleCNVMouseOut);
     this.cnv.mouseClicked(handleCNVMouseClicked);
   }
 
@@ -37,7 +35,6 @@ class Game {
     for (var i = 0; i < this.enemies.length; i++) {
       this.enemies[i].run();
     }
-     //println("mouseY -->  " + mouseY);
   }
 
   render() { // draw game stuff

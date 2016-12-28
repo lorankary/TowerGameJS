@@ -7,6 +7,8 @@ class Tower {
     this.bullet = bullet;
     this.towerNum = 0;
     this.towAngle = 0;
+    this.lastTime = millis();
+    this.coolDown = 200;
   }
   run() {
     this.render();
@@ -14,20 +16,33 @@ class Tower {
   }
   render() {
     push();
-    imageMode(CENTER);
-    translate(this.loc.x, this.loc.y);
-    rotate(this.towAngle);
-    if (this.visible) { //  not visible when first created
-      image(this.towImg, 0,0);
-    }
+      imageMode(CENTER);
+      translate(this.loc.x, this.loc.y);
+      rotate(this.towAngle);
+      if (this.visible) { //  not visible when first created
+        image(this.towImg, 0,0);
+      }
     pop();
   }
   update() {
     //  Rotate turret to follow mouse
-    var mouseLoc = createVector(mouseX, mouseY);
-    var dx = this.loc.x - mouseLoc.x;
-    var dy = this.loc.y - mouseLoc.y;
+    let dx = this.loc.x - mouseX;
+    let dy = this.loc.y - mouseY;
     this.towAngle = atan2(dy, dx) - (PI/2);
+    this.checkEnemies();
+  }
+
+  checkEnemies(){
+
+    if(this.placed &&
+      this.loc.dist(createVector(mouseX, mouseY)) < 100 &&
+      (millis()-this.lastTime > this.coolDown )){
+          // reset lastTime to current time
+          this.lastTime = millis();
+          let bulletLocation = createVector(this.loc.x, this.loc.y);
+          let b = new Bullet(bulletLocation ,  this.bullet, this.towAngle);
+          towerGame.bullets.push(b);
+    }
 
   }
 
