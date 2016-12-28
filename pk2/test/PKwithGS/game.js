@@ -27,6 +27,7 @@ class Game {
 
   run() { // called from draw()
     clear();
+
     if (this.isRunning) {
       this.render();
     }
@@ -36,6 +37,7 @@ class Game {
     for (var i = 0; i < this.enemies.length; i++) {
       this.enemies[i].run();
     }
+     //println("mouseY -->  " + mouseY);
   }
 
   render() { // draw game stuff
@@ -65,10 +67,33 @@ createTileDivs(){
     return true;
   }
 
-  createTower() {
+  createTower(tn) {
     //create a new tower object and add to array list
-    var tower = new TowerOne(createVector(width / 2, height / 2), 100, "b1");
-    this.towers.push(tower); // add tower to the end of the array of towers
+    switch(tn) {
+      case 1:
+        var tower = new TowerOne(createVector(width / 2, height / 2), 100, "b1");
+        this.towers.push(tower); // add tower to the end of the array of towers
+        break;
+      case 2:
+        var tower = new TowerTwo(createVector(width / 2, height / 2), 100, "b2");
+        this.towers.push(tower); // add tower to the end of the array of towers
+        break;
+      case 3:
+          var tower = new TowerThree(createVector(width / 2, height / 2), 100, "b3");
+          this.towers.push(tower); // add tower to the end of the array of towers
+          break;
+      case 4:
+          var tower = new TowerFour(createVector(width / 2, height / 2), 100, "b4");
+          this.towers.push(tower); // add tower to the end of the array of towers
+          break;
+      case 5:
+          var tower = new TowerFive(createVector(width / 2, height / 2), 100, "b5");
+          this.towers.push(tower); // add tower to the end of the array of towers
+          break;
+      default:
+        println('failed to make turret');
+    }
+
   }
 
   placeTower() {
@@ -97,12 +122,11 @@ function loadDOMCallBacks(menuTiles) {//**************************************
 //  tile menu callbacks +++++++++++++++++++++++++
 function tileRollOver() {
   this.style('background-color', '#f7e22a');
-  this.pumpkin = 'One';
-
 }
 
 function tilePressed() {
   this.style('background-color', '#900');
+
 }
 
 function tileRollOut() {
@@ -110,15 +134,24 @@ function tileRollOut() {
 }
 
 function tileClicked() {
-  println("-->  " +   this.pumpkin);
-  //var thisID = this.id(1);
-  //println('thisId = ' + thisID);
+   var towNum = 0;
+   if(mouseY < 122){
+     towNum = 1;
+   }else if(mouseY < 270){
+     towNum = 2;
+   }else if(mouseY < 417){
+     towNum = 3;
+   }else if(mouseY < 560){
+     towNum = 4;
+   }else if(mouseY < 710){
+     towNum = 5;
+   }
   //if user clicks tile and not placing tile change placing to true
   // can add Tower checks cost and other conditions
   if(towerGame.placingTower === true) return;
   if (towerGame.getBankValue() > 100) {
     towerGame.placingTower = true;
-    towerGame.createTower();
+    towerGame.createTower(towNum);
   }
 
 }
@@ -144,13 +177,3 @@ function handleCNVMouseClicked() {
    }
 }
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Other
-//
-// .menuTileDiv{
-//   background-color: #DDD;
-//   background-image: url("wframe.png");
-//   width:80px;
-//   height:80px;
-//   margin-top:38px;
-//   margin-left:10px;
-//     float:left;
-// }
