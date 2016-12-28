@@ -6,12 +6,15 @@ class Tower {
     this.cost = cost;
     this.bullet = bullet;
     this.towerNum = 0;
+    this.towAngle = 0;
   }
   run() {
     this.render();
+    this.update();
   }
   render() {
     push();
+    imageMode(CENTER);
     fill(200, 100, 50);
     stroke(22);
     if (this.visible) { //  not visible when first created
@@ -23,7 +26,12 @@ class Tower {
     pop();
   }
   update() {
-    //console.log(this.placed);
+    //  Rotate turret to follow mouse
+    var mouseLoc = createVector(mouseX, mouseY);
+    var dx = this.loc.x - mouseLoc.x;
+    var dy = this.loc.y - mouseLoc.y;
+    this.towAngle = atan2(dy, dx) - (PI/2);
+
   }
 
 }//  end Tower class
@@ -34,22 +42,20 @@ class TowerOne extends Tower {
     this.placed = false;
     this.visible = false;
     this.towerNum = 1;
-    this.t1Img = loadImage('tow0.png');
-
+    this.towImg = loadImage('tow0.png');
   }
 
   render() {
     push();
-    fill(100, 200, 50);
-    stroke(22);
+    imageMode(CENTER);
+    translate(this.loc.x, this.loc.y);
+    rotate(this.towAngle);
     if (this.visible) { //  not visible when first created
-      strokeWeight(1);
-      image(this.t1Img, this.loc.x, this.loc.y);//    t1Imgellipse(this.loc.x, this.loc.y, 30, 30);
-      //strokeWeight(4);
-    //  line(this.loc.x, this.loc.y, this.loc.x + 30, this.loc.y);
+      image(this.towImg, 0,0);
     }
     pop();
   }
+
 }//  end Tower_One class
 
 class TowerTwo extends Tower {
@@ -57,20 +63,17 @@ class TowerTwo extends Tower {
     super(loc, cost, bullet);
     this.placed = false;
     this.visible = false;
-    this.towerNum = 1;
-    this.t1Img = loadImage('tow1.png');
-
+    this.towerNum = 2;
+    this.towImg = loadImage('tow1.png');
   }
 
   render() {
     push();
-    fill(100, 200, 50);
-    stroke(22);
+    imageMode(CENTER);
+    translate(this.loc.x, this.loc.y);
+    rotate(this.towAngle);
     if (this.visible) { //  not visible when first created
-      strokeWeight(1);
-      image(this.t1Img, this.loc.x, this.loc.y);//    t1Imgellipse(this.loc.x, this.loc.y, 30, 30);
-      //strokeWeight(4);
-    //  line(this.loc.x, this.loc.y, this.loc.x + 30, this.loc.y);
+      image(this.towImg, 0, 0);
     }
     pop();
   }
@@ -81,20 +84,17 @@ class TowerThree extends Tower {
     super(loc, cost, bullet);
     this.placed = false;
     this.visible = false;
-    this.towerNum = 1;
-    this.t1Img = loadImage('tow2.png');
-
+    this.towerNum = 3;
+    this.towImg = loadImage('tow2.png');
   }
 
   render() {
     push();
-    fill(100, 200, 50);
-    stroke(22);
+    imageMode(CENTER);
+    translate(this.loc.x, this.loc.y);
+    rotate(this.towAngle);
     if (this.visible) { //  not visible when first created
-      strokeWeight(1);
-      image(this.t1Img, this.loc.x, this.loc.y);//    t1Imgellipse(this.loc.x, this.loc.y, 30, 30);
-      //strokeWeight(4);
-    //  line(this.loc.x, this.loc.y, this.loc.x + 30, this.loc.y);
+      image(this.towImg, 0, 0);
     }
     pop();
   }
@@ -105,20 +105,17 @@ class TowerFour extends Tower {
     super(loc, cost, bullet);
     this.placed = false;
     this.visible = false;
-    this.towerNum = 1;
-    this.t1Img = loadImage('tow3.png');
-
+    this.towerNum = 4;
+    this.towImg = loadImage('tow3.png');
   }
 
   render() {
     push();
-    fill(100, 200, 50);
-    stroke(22);
+    imageMode(CENTER);
+    translate(this.loc.x, this.loc.y);
+    rotate(this.towAngle);
     if (this.visible) { //  not visible when first created
-      strokeWeight(1);
-      image(this.t1Img, this.loc.x, this.loc.y);//    t1Imgellipse(this.loc.x, this.loc.y, 30, 30);
-      //strokeWeight(4);
-    //  line(this.loc.x, this.loc.y, this.loc.x + 30, this.loc.y);
+      image(this.towImg,0, 0);
     }
     pop();
   }
@@ -130,20 +127,19 @@ class TowerFive extends Tower {
     super(loc, cost, bullet);
     this.placed = false;
     this.visible = false;
-    this.towerNum = 1;
-    this.t1Img = loadImage('tow4.png');
+    this.towerNum = 5;
+    this.towImg = loadImage('tow4.png');
 
   }
 
   render() {
     push();
-    fill(100, 200, 50);
-    stroke(22);
+    imageMode(CENTER);
+    translate(this.loc.x, this.loc.y);
+    rotate(this.towAngle);
     if (this.visible) { //  not visible when first created
-      strokeWeight(1);
-      image(this.t1Img, this.loc.x, this.loc.y);//    t1Imgellipse(this.loc.x, this.loc.y, 30, 30);
-      //strokeWeight(4);
-    //  line(this.loc.x, this.loc.y, this.loc.x + 30, this.loc.y);
+
+      image(this.towImg, 0, 0);
     }
     pop();
   }
