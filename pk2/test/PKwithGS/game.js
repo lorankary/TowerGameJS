@@ -41,44 +41,40 @@ class Game {
   render() { // draw game stuff
 
   }
-//????????????????????????????????????????????????????????????????
-  createTileDivs(){
-    var tiles = [];
-    for(var i = 0; i < 5; i++){
-      var mtd = createDiv("");
-      mtd.parent("#menuDiv");
-      var divName = 'towImgDiv' + i;
-      mtd.id(divName);
 
-      //tImg.parent(mtd);
-      tiles.push(mtd);
-      var imgName = 'tow' + i + '.png';
-      var tImg = createImg(imgName);
-      tImg.parent(tiles[i]);
+createTileDivs(){
+  var tiles = [];
+  for(var i = 0; i < 5; i++){
+    var mtd = createDiv("");
+    mtd.parent("#menuDiv");
+    mtd.id('towImgDiv' + i);
+    tiles.push(mtd);
+    var imgName = 'tow' + i + '.png';
+    var tImg = createImg(imgName);
+    tImg.parent(tiles[i]);
   }
-    return tiles;
-  }
+  return tiles;
+}
+
   getBankValue(){
     return this.bankValue;
   }
   //  Logic to add tower +++++++++++++++++++++++
   canAddTower() {
     // add conditions before allowing user to place turret
-    if (mouseX < 900)
     return true;
-    return false;
   }
 
   createTower() {
     //create a new tower object and add to array list
-    var tower = new Tower(createVector(width / 2, height / 2), 100, "b1");
+    var tower = new TowerOne(createVector(width / 2, height / 2), 100, "b1");
     this.towers.push(tower); // add tower to the end of the array of towers
   }
 
   placeTower() {
-    // place tower into play area at location of mouse
+    //  place tower into play area at location of mouse
     towerGame.towers[towerGame.towers.length-1].loc = createVector(mouseX, mouseY);
-    //  tower needs to know if it is places
+    //  tower needs to know if it is placed
     towerGame.towers[towerGame.towers.length-1].placed = true;
     //  only one tower placed at a time
     towerGame.placingTower = false;
@@ -93,7 +89,6 @@ function loadDOMCallBacks(menuTiles) {//**************************************
      menuTiles[i].mouseOut(tileRollOut);
      menuTiles[i].mousePressed(tilePressed);
      menuTiles[i].mouseClicked(tileClicked);
-
    }
 
 }
@@ -102,6 +97,7 @@ function loadDOMCallBacks(menuTiles) {//**************************************
 //  tile menu callbacks +++++++++++++++++++++++++
 function tileRollOver() {
   this.style('background-color', '#f7e22a');
+  this.pumpkin = 'One';
 
 }
 
@@ -114,6 +110,9 @@ function tileRollOut() {
 }
 
 function tileClicked() {
+  println("-->  " +   this.pumpkin);
+  //var thisID = this.id(1);
+  //println('thisId = ' + thisID);
   //if user clicks tile and not placing tile change placing to true
   // can add Tower checks cost and other conditions
   if(towerGame.placingTower === true) return;

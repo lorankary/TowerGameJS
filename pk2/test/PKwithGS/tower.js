@@ -1,5 +1,4 @@
 class Tower {
-
   constructor(loc, cost, bullet) {
     this.loc = loc;
     this.placed = false;
@@ -8,11 +7,9 @@ class Tower {
     this.bullet = bullet;
     this.towerNum = 0;
   }
-
   run() {
     this.render();
   }
-
   render() {
     push();
     fill(200, 100, 50);
@@ -25,12 +22,32 @@ class Tower {
     }
     pop();
   }
-
   update() {
     //console.log(this.placed);
+  }
 
+}//  end Tower class
+
+class TowerOne extends Tower {
+  constructor(loc, cost, bullet) {
+    super(loc, cost, bullet);
+    this.placed = false;
+    this.visible = false;
+    this.towerNum = 1;
+    this.t1Img = loadImage('tow3.png');
 
   }
 
-
-}
+  render() {
+    push();
+    fill(100, 200, 50);
+    stroke(22);
+    if (this.visible) { //  not visible when first created
+      strokeWeight(1);
+      image(this.t1Img, this.loc.x, this.loc.y);//    t1Imgellipse(this.loc.x, this.loc.y, 30, 30);
+      //strokeWeight(4);
+    //  line(this.loc.x, this.loc.y, this.loc.x + 30, this.loc.y);
+    }
+    pop();
+  }
+}//  end Tower_One class
