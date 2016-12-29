@@ -3,6 +3,7 @@ class Bullet{
   constructor(location, bulletType, angle){
     this.loc = location;
     this.bullTyp = bulletType
+    this.speed = 12;
     this.angle = angle;
     this.img = this.loadImage();
   }
@@ -36,6 +37,7 @@ class Bullet{
     this.update();
   }
   render(){
+    imageMode(CENTER);
     push()
     translate(this.loc.x, this.loc.y);
     rotate(this.angle);
@@ -45,7 +47,7 @@ class Bullet{
   }
 
   update(){
-    this.loc.y += sin(this.angle - (PI/2))*2;
-    this.loc.x += cos(this.angle- (PI/2))*2;
+    this.loc.y += sin(this.angle - (PI/2))*this.speed;
+    this.loc.x += cos(this.angle- (PI/2))*this.speed;
   }
 }//  end Bullet class

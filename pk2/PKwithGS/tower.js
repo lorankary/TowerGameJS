@@ -8,7 +8,7 @@ class Tower {
     this.towerNum = 0;
     this.towAngle = 0;
     this.lastTime = millis();
-    this.coolDown = 200;
+    this.coolDown = 500;
   }
   run() {
     this.render();
