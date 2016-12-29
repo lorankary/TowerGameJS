@@ -15,26 +15,23 @@ class Game {
     this.bankValue = 500;
     this.cnv = createCanvas(900, 750);
     this.cnv.parent('canDiv');
-    this.tileDivs = this.createTileDivs();
     this.lastTime = millis();
     //console.log('this.tileDivs = ' + this.tileDivs[1] );
     //select everything of type/class and set call backs
-    loadDOMCallBacks(this.tileDivs);  //**********************************
+    this.tileDivs = this.createTileDivs();
+    loadDOMCallBacks(this.tileDivs);
     // select canvas for callbacks
     this.cnv.mouseMoved(handleCNVMouseMoved);
     this.cnv.mouseOver(handleCNVMouseOver);
-    //this.cnv.mouseOut(handleCNVMouseOut);
     this.cnv.mouseClicked(handleCNVMouseClicked);
-
-    //++++++++++++++++++++++++++++++
-    textSize(24);
   }
 
   run() { // called from draw()
     clear();
+    println('bullets.length = ' + this.bullets.length);
     let gt = this.updateGameTime();
     this.updateInfoElements(gt);
-
+    this.removeBullets();
     if (this.isRunning) {
       this.render();
     }
@@ -45,6 +42,7 @@ class Game {
       this.enemies[i].run();
     }
     for (let i = 0; i < this.bullets.length; i++) {
+
       this.bullets[i].run();
     }
   }
@@ -53,10 +51,21 @@ class Game {
 
   }
 
-  updateInfoElements(time){
+  removeBullets(){
+    if(this.bullets.length < 1) return;
+    for(let i = this.bullets.length-1; i >= 0; i--){
 
+       if( this.bullets[i].loc.x < 0 ||
+           this.bullets[i].loc.x > width ||
+           this.bullets[i].loc.y < 0 ||
+           this.bullets[i].loc.y > height ){
+             this.bullets.splice(i, 1);
+           }
+
+    }
+  }
+  updateInfoElements(time){
     let infoElements = selectAll('.infoTileDiv');
-    println('time1 = '+ time);
     for(let i = 0; i < infoElements.length; i++){
       // change the html content after condition--use indexOf
       if(infoElements[i].html().indexOf('Bank') != -1){
@@ -136,9 +145,12 @@ class Game {
     towerGame.placingTower = false;
   }
 
-} //  end Game class
-//++++++++++++++++++++++++++++++++++++++++++++++  load callbacks
-function loadDOMCallBacks(menuTiles) {//**************************************
+} // end Game class +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ load callbacks
+function loadDOMCallBacks(menuTiles) {
   //  load tile menu callbacks
   for (var i = 0; i < menuTiles.length; i++) {
     menuTiles[i].mouseOver(tileRollOver);
@@ -149,8 +161,7 @@ function loadDOMCallBacks(menuTiles) {//**************************************
 
 }
 
-
-//  tile menu callbacks +++++++++++++++++++++++++
+//+++++++++++++++++++++++++   tile menu callbacks
 function tileRollOver() {
   this.style('background-color', '#f7e22a');
 }
@@ -185,22 +196,22 @@ function tileClicked() {
   }
 
 }
-//  +++++++++++++++++++++++++ mouse handlers
-function handleCNVMouseOver() {
-  if(towerGame.towers.length < 1) return;
-  towerGame.towers[towerGame.towers.length-1].visible = true;
-}
-
-
-function handleCNVMouseMoved() {
-  if(towerGame.towers.length < 1) return;
-  if(!towerGame.towers[towerGame.towers.length-1].placed &&
-    towerGame.placingTower === true ){
-      //follow mouse
-      towerGame.towers[towerGame.towers.length-1].loc.x = mouseX;
-      towerGame.towers[towerGame.towers.length-1].loc.y = mouseY;
-    }
+//  ++++++++++++++++++++++++++++++++++++++++++++++++++    mouse handlers
+  function handleCNVMouseOver() {
+    if(towerGame.towers.length < 1) return;
+    towerGame.towers[towerGame.towers.length-1].visible = true;
   }
+
+  function handleCNVMouseMoved() {
+    if(towerGame.towers.length < 1) return;
+    if(!towerGame.towers[towerGame.towers.length-1].placed &&
+      towerGame.placingTower === true ){
+        //follow mouse
+        towerGame.towers[towerGame.towers.length-1].loc.x = mouseX;
+        towerGame.towers[towerGame.towers.length-1].loc.y = mouseY;
+      }
+  }
+
   function handleCNVMouseClicked() {
     if(towerGame.canAddTower()){
       towerGame.placeTower();
