@@ -43,18 +43,16 @@ class Tower {
           let b = new Bullet(bulletLocation ,  this.bullet, this.towAngle);
           towerGame.bullets.push(b);
     }
-
   }
 
-}//  end Tower class
+}//  end Tower class +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 class TowerOne extends Tower {
   constructor(loc, cost, bullet) {
     super(loc, cost, bullet);
     this.towerNum = 1;
-    this.towImg = loadImage('tow0.png');
+    this.towImg = loadImage('tow1s.png');
   }
-
 
 }//  end Tower_One class
 
@@ -62,7 +60,7 @@ class TowerTwo extends Tower {
   constructor(loc, cost, bullet) {
     super(loc, cost, bullet);
     this.towerNum = 2;
-    this.towImg = loadImage('tow1.png');
+    this.towImg = loadImage('tow2s.png');
   }
 
 }//  end Tower_Two class
@@ -71,9 +69,8 @@ class TowerThree extends Tower {
   constructor(loc, cost, bullet) {
     super(loc, cost, bullet);
     this.towerNum = 3;
-    this.towImg = loadImage('tow2.png');
+    this.towImg = loadImage('tow3s.png');
   }
-
 
 }//  end Tower_three class
 
@@ -81,17 +78,16 @@ class TowerFour extends Tower {
   constructor(loc, cost, bullet) {
     super(loc, cost, bullet);
     this.towerNum = 4;
-    this.towImg = loadImage('tow3.png');
+    this.towImg = loadImage('tow4s.png');
   }
 
 }//  end Tower_three class
-
 
 class TowerFive extends Tower {
   constructor(loc, cost, bullet) {
     super(loc, cost, bullet);
     this.towerNum = 5;
-    this.towImg = loadImage('tow4.png');
+    this.towImg = loadImage('tow5s.png');
 
   }
 
