@@ -1,11 +1,11 @@
 class Bullet{
 
-  constructor(location, bulletType, angle){
+  constructor(location, bImg, angle){
+    // issue#1 use preloaded bullet image instead of loadImage
     this.loc = location;
-    this.bullTyp = bulletType
     this.speed = 12;
     this.angle = angle;
-    this.img = this.loadImage();
+    this.img = bImg;
   }
 
   loadImage(){

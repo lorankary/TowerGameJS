@@ -1,11 +1,12 @@
 class Tower {
-  constructor(loc, cost, bullet) {
+  // issue#1 use preloaded images
+  constructor(loc, cost, tImg, bImg) {
     this.loc = loc;
     this.placed = false;
     this.visible = false;
     this.cost = cost;
-    this.bullet = bullet;
-    this.towerNum = 0;
+    this.bulletImg = bImg;
+    this.towImg = tImg;
     this.towAngle = 0;
     this.lastTime = millis();
     this.coolDown = 500;
@@ -40,55 +41,9 @@ class Tower {
           // reset lastTime to current time
           this.lastTime = millis();
           let bulletLocation = createVector(this.loc.x, this.loc.y);
-          let b = new Bullet(bulletLocation ,  this.bullet, this.towAngle);
+          let b = new Bullet(bulletLocation , this.bulletImg, this.towAngle);
           towerGame.bullets.push(b);
     }
   }
 
 }//  end Tower class +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-class TowerOne extends Tower {
-  constructor(loc, cost, bullet) {
-    super(loc, cost, bullet);
-    this.towerNum = 1;
-    this.towImg = loadImage('tow1s.png');
-  }
-
-}//  end Tower_One class
-
-class TowerTwo extends Tower {
-  constructor(loc, cost, bullet) {
-    super(loc, cost, bullet);
-    this.towerNum = 2;
-    this.towImg = loadImage('tow2s.png');
-  }
-
-}//  end Tower_Two class
-
-class TowerThree extends Tower {
-  constructor(loc, cost, bullet) {
-    super(loc, cost, bullet);
-    this.towerNum = 3;
-    this.towImg = loadImage('tow3s.png');
-  }
-
-}//  end Tower_three class
-
-class TowerFour extends Tower {
-  constructor(loc, cost, bullet) {
-    super(loc, cost, bullet);
-    this.towerNum = 4;
-    this.towImg = loadImage('tow4s.png');
-  }
-
-}//  end Tower_three class
-
-class TowerFive extends Tower {
-  constructor(loc, cost, bullet) {
-    super(loc, cost, bullet);
-    this.towerNum = 5;
-    this.towImg = loadImage('tow5s.png');
-
-  }
-
-}//  end Tower_three class

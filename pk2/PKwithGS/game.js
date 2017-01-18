@@ -24,11 +24,30 @@ class Game {
     this.cnv.mouseMoved(handleCNVMouseMoved);
     this.cnv.mouseOver(handleCNVMouseOver);
     this.cnv.mouseClicked(handleCNVMouseClicked);
+
+    // issue#1  preload images with createImg()
+    // the small turret images
+    this.tow1sImg = createImg("tow1s.png",this.hideImgElement);
+    this.tow2sImg = createImg("tow2s.png",this.hideImgElement);
+    this.tow3sImg = createImg("tow3s.png",this.hideImgElement);
+    this.tow4sImg = createImg("tow4s.png",this.hideImgElement);
+    this.tow5sImg = createImg("tow5s.png",this.hideImgElement);
+    // the bullet images
+    this.b1Img = createImg("b1.png",this.hideImgElement);
+    this.b2Img = createImg("b2.png",this.hideImgElement);
+    this.b3Img = createImg("b3.png",this.hideImgElement);
+    this.b4Img = createImg("b4.png",this.hideImgElement);
+    this.b5Img = createImg("b5.png",this.hideImgElement);
+
+
+
   }
+
+  hideImgElement() { this.hide(); }
 
   run() { // called from draw()
     clear();
-    println('bullets.length = ' + this.bullets.length);
+    // println('bullets.length = ' + this.bullets.length);
     let gt = this.updateGameTime();
     this.updateInfoElements(gt);
     this.removeBullets();
@@ -108,32 +127,42 @@ class Game {
   }
 
   createTower(tn) {
-    //create a new tower object and add to array list
+    // create a new tower object and add to array list
+    // issue#1 use preloaded turret and bullet images
+    // and eliminate Tower (turret) subclasses.
+    var loc = createVector(width / 2, height / 2);
+    var cost = 100;
+    var tImg, bImg;
     switch(tn) {
       case 1:
-      var tower = new TowerOne(createVector(width / 2, height / 2), 100, "b1");
-      this.towers.push(tower); // add tower to the end of the array of towers
-      break;
+        tImg = this.tow1sImg;
+        bImg = this.b1Img;
+        break;
       case 2:
-      var tower = new TowerTwo(createVector(width / 2, height / 2), 100, "b2");
-      this.towers.push(tower); // add tower to the end of the array of towers
-      break;
+        tImg = this.tow2sImg;
+        bImg = this.b2Img;
+        break;
       case 3:
-      var tower = new TowerThree(createVector(width / 2, height / 2), 100, "b3");
-      this.towers.push(tower); // add tower to the end of the array of towers
-      break;
+        tImg = this.tow3sImg;
+        bImg = this.b3Img;
+        break;
       case 4:
-      var tower = new TowerFour(createVector(width / 2, height / 2), 100, "b4");
-      this.towers.push(tower); // add tower to the end of the array of towers
-      break;
+        tImg = this.tow4sImg;
+        bImg = this.b4Img;
+        break;
       case 5:
-      var tower = new TowerFive(createVector(width / 2, height / 2), 100, "b5");
-      this.towers.push(tower); // add tower to the end of the array of towers
-      break;
+        tImg = this.tow5sImg;
+        bImg = this.b5Img;
+        break;
       default:
       println('failed to make turret');
     }
-
+    var tower = new Tower(loc, cost, tImg, bImg);
+    if(tower)
+      this.towers.push(tower); // add tower to the end of the array of towers
+    else {
+      println('failed to make turret');
+    }
   }
 
   placeTower() {
