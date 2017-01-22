@@ -1,3 +1,5 @@
+'use strict'
+
 class Tower {
   // issue#1 use preloaded images
   constructor( cost, tImg, bImg) {
