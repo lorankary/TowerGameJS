@@ -1,7 +1,7 @@
 class Tower {
   // issue#1 use preloaded images
-  constructor(loc, cost, tImg, bImg) {
-    this.loc = loc;
+  constructor( cost, tImg, bImg) {
+    this.loc = createVector(0, 0);
     this.placed = false;
     this.visible = false;
     this.cost = cost;
@@ -29,7 +29,7 @@ class Tower {
     //  Rotate turret to follow mouse
     let dx = this.loc.x - mouseX;
     let dy = this.loc.y - mouseY;
-    this.towAngle = atan2(dy, dx) - (PI/2);
+    this.towAngle = atan2(dy, dx) - PI;
     this.checkEnemies();
   }
 

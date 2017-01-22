@@ -8,30 +8,6 @@ class Bullet{
     this.img = bImg;
   }
 
-  loadImage(){
-    var bImage;
-     switch(this.bullTyp){
-       case "b1":
-          bImage = loadImage('b1.png');
-       break;
-       case "b2":
-          bImage = loadImage('b2.png');
-       break;
-       case "b3":
-          bImage = loadImage('b3.png');
-       break;
-       case "b4":
-          bImage = loadImage('b4.png');
-       break;
-       case "b5":
-          bImage = loadImage('b5.png');
-       break;
-      default:
-          println('No bullet image chosen');
-       break;
-     }
-    return bImage
-  }
   run(){
     this.render();
     this.update();
@@ -47,7 +23,8 @@ class Bullet{
   }
 
   update(){
-    this.loc.y += sin(this.angle - (PI/2))*this.speed;
-    this.loc.x += cos(this.angle- (PI/2))*this.speed;
+    this.loc.y += sin(this.angle )*this.speed;
+    this.loc.x += cos(this.angle)*this.speed;
+
   }
 }//  end Bullet class
