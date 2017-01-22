@@ -16,33 +16,19 @@ class Game {
     this.cnv = createCanvas(900, 750);
     this.cnv.parent('canDiv');
     this.lastTime = millis();
-    //console.log('this.tileDivs = ' + this.tileDivs[1] );
     //select everything of type/class and set call backs
     this.tileDivs = this.createTileDivs();
-    loadDOMCallBacks(this.tileDivs);
+    this.loadDOMCallBacks(this.tileDivs);
     // select canvas for callbacks
-    this.cnv.mouseMoved(handleCNVMouseMoved);
-    this.cnv.mouseOver(handleCNVMouseOver);
-    this.cnv.mouseClicked(handleCNVMouseClicked);
-
-    // issue#1  preload images with createImg()
-    // the small turret images
-    this.tow1sImg = createImg("tow1s.png",this.hideImgElement);
-    this.tow2sImg = createImg("tow2s.png",this.hideImgElement);
-    this.tow3sImg = createImg("tow3s.png",this.hideImgElement);
-    this.tow4sImg = createImg("tow4s.png",this.hideImgElement);
-    this.tow5sImg = createImg("tow5s.png",this.hideImgElement);
-    // the bullet images
-    this.b1Img = createImg("b1.png",this.hideImgElement);
-    this.b2Img = createImg("b2.png",this.hideImgElement);
-    this.b3Img = createImg("b3.png",this.hideImgElement);
-    this.b4Img = createImg("b4.png",this.hideImgElement);
-    this.b5Img = createImg("b5.png",this.hideImgElement);
-
-
+    this.cnv.mouseMoved(this.handleCNVMouseMoved);
+    this.cnv.mouseOver(this.handleCNVMouseOver);
+    this.cnv.mouseClicked(this.handleCNVMouseClicked);
 
   }
 
+  // The success callback when a tower canvas image
+  // or bullet image has loaded.  Hide them from
+  // displaying on the page.
   hideImgElement() { this.hide(); }
 
   run() { // called from draw()
@@ -103,14 +89,24 @@ class Game {
     return this.gameTime;
   }
 
+  // Create the divs to hold the menu of towers with
+  // the large images.  This divs also contain the
+  // parameters for creating towers to be drawn on the
+  // canvas.
   createTileDivs(){
     var tiles = [];
+
     for(var i = 0; i < 5; i++){
       var mtd = createDiv("");
+      var cnvTurImgPath = "tow" + (i+1) + "s.png";  // small tower image for canvas
+      var cnvBulImgPath = "b" + (i+1) + ".png";     // bullet image for canvas
+      mtd.cnvTurImg = createImg(cnvTurImgPath, cnvTurImgPath + "failed to load", this.hideImgElement);
+      mtd.cnvBulImg = createImg(cnvBulImgPath, cnvBulImgPath + "failed to load", this.hideImgElement);
       mtd.parent("#menuDiv");
+      mtd.cost = 100*i +50;
       mtd.id('towImgDiv' + i);
       tiles.push(mtd);
-      var imgName = 'tow' + i + '.png';
+      var imgName = 'tow' + i + '.png'; // large image for menu tile
       var tImg = createImg(imgName);
       tImg.parent(tiles[i]);
     }
@@ -123,45 +119,19 @@ class Game {
   //  Logic to add tower +++++++++++++++++++++++
   canAddTower() {
     // add conditions before allowing user to place turret
-    return true;
+    if(towerGame.placingTower)
+      return true;
+    return(false);
   }
 
-  createTower(tn) {
+  createTower(mtd) { // menu turret div
     // create a new tower object and add to array list
-    // issue#1 use preloaded turret and bullet images
-    // and eliminate Tower (turret) subclasses.
-    var loc = createVector(width / 2, height / 2);
-    var cost = 100;
-    var tImg, bImg;
-    switch(tn) {
-      case 1:
-        tImg = this.tow1sImg;
-        bImg = this.b1Img;
-        break;
-      case 2:
-        tImg = this.tow2sImg;
-        bImg = this.b2Img;
-        break;
-      case 3:
-        tImg = this.tow3sImg;
-        bImg = this.b3Img;
-        break;
-      case 4:
-        tImg = this.tow4sImg;
-        bImg = this.b4Img;
-        break;
-      case 5:
-        tImg = this.tow5sImg;
-        bImg = this.b5Img;
-        break;
-      default:
-      println('failed to make turret');
-    }
-    var tower = new Tower(loc, cost, tImg, bImg);
+    // the menu tower div contains the parameters for the tower
+    var tower = new Tower( mtd.cost, mtd.cnvTurImg, mtd.cnvBulImg);
     if(tower)
       this.towers.push(tower); // add tower to the end of the array of towers
     else {
-      println('failed to make turret');
+      println('failed to make tower');
     }
   }
 
@@ -174,65 +144,48 @@ class Game {
     towerGame.placingTower = false;
   }
 
-} // end Game class +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ load callbacks
-function loadDOMCallBacks(menuTiles) {
-  //  load tile menu callbacks
-  for (var i = 0; i < menuTiles.length; i++) {
-    menuTiles[i].mouseOver(tileRollOver);
-    menuTiles[i].mouseOut(tileRollOut);
-    menuTiles[i].mousePressed(tilePressed);
-    menuTiles[i].mouseClicked(tileClicked);
+  loadDOMCallBacks(menuTiles) {
+    //  load tile menu callbacks
+    for (var i = 0; i < menuTiles.length; i++) {
+      menuTiles[i].mouseOver(this.tileRollOver);
+      menuTiles[i].mouseOut(this.tileRollOut);
+      menuTiles[i].mousePressed(this.tilePressed);
+      menuTiles[i].mouseClicked(this.tileClicked);
+    }
+
   }
 
-}
-
-//+++++++++++++++++++++++++   tile menu callbacks
-function tileRollOver() {
-  this.style('background-color', '#f7e22a');
-}
-
-function tileRollOut() {
-  this.style('background-color', '#DDD');
-}
-
-function tilePressed() {
-  this.style('background-color', '#900');
-}
-
-function tileClicked() {
-  console.log(this);
-  var towNum = 0;
-  if(mouseY < 122){
-    towNum = 1;
-  }else if(mouseY < 270){
-    towNum = 2;
-  }else if(mouseY < 417){
-    towNum = 3;
-  }else if(mouseY < 560){
-    towNum = 4;
-  }else if(mouseY < 710){
-    towNum = 5;
-  }
-  //if user clicks tile and not placing tile change placing to true
-  // can add Tower checks cost and other conditions
-  if(towerGame.placingTower === true) return;
-  if (towerGame.getBankValue() > 100) {
-    towerGame.placingTower = true;
-    towerGame.createTower(towNum);
+  //+++++++++++++++++++++++++   tile menu callbacks
+  tileRollOver() {
+    this.style('background-color', '#f7e22a');
   }
 
-}
+  tileRollOut() {
+    this.style('background-color', '#DDD');
+  }
+
+  tilePressed() {
+    this.style('background-color', '#900');
+  }
+
+  tileClicked() {
+    //if user clicks tile and not placing tile change placing to true
+    // can add Tower checks cost and other conditions
+    if(towerGame.placingTower === true) return;
+    if (towerGame.getBankValue() > 100) {
+      towerGame.placingTower = true;
+      towerGame.createTower(this);
+    }
+
+  }
 //  ++++++++++++++++++++++++++++++++++++++++++++++++++    mouse handlers
-  function handleCNVMouseOver() {
+  handleCNVMouseOver() {
     if(towerGame.towers.length < 1) return;
     towerGame.towers[towerGame.towers.length-1].visible = true;
   }
 
-  function handleCNVMouseMoved() {
+  handleCNVMouseMoved() {
     if(towerGame.towers.length < 1) return;
     if(!towerGame.towers[towerGame.towers.length-1].placed &&
       towerGame.placingTower === true ){
@@ -242,9 +195,10 @@ function tileClicked() {
       }
   }
 
-  function handleCNVMouseClicked() {
+  handleCNVMouseClicked() {
     if(towerGame.canAddTower()){
       towerGame.placeTower();
     }
   }
   //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ Other
+} // end Game class +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
