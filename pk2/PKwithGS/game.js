@@ -204,6 +204,7 @@ function tilePressed() {
 }
 
 function tileClicked() {
+  console.log(this);
   var towNum = 0;
   if(mouseY < 122){
     towNum = 1;
