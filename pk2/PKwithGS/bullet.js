@@ -15,18 +15,19 @@ class Bullet{
     this.update();
   }
   render(){
-    imageMode(CENTER);
-    push()
-    translate(this.loc.x, this.loc.y);
-    rotate(this.angle);
-    image(this.img, 0,0);
+  
+    var ctx = towerGame.context;
+    ctx.save();
+    ctx.translate(this.loc.vx, this.loc.vy);
+    ctx.rotate(this.angle);
+    ctx.drawImage(this.img, -this.img.width/2,-this.img.height/2);
 
-    pop();
+    ctx.restore();
   }
 
   update(){
-    this.loc.y += sin(this.angle )*this.speed;
-    this.loc.x += cos(this.angle)*this.speed;
+    this.loc.vy += Math.sin(this.angle)*this.speed;
+    this.loc.vx += Math.cos(this.angle)*this.speed;
 
   }
 }//  end Bullet class
